@@ -1,12 +1,34 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import copyImg from "../assets/copy.svg";
 import "../styles/home.css";
 
 export function Home() {
   const [newTextToTranslate, setNewTextToTranslate] = useState("");
   const [newTranslation, setNewTranslation] = useState("");
+  const [data, setData] = useState({});
 
-  function handleSendQuestion(event: FormEvent) {
+  useEffect(() => {
+    fetch("/todo/getall")
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+        console.log(data);
+      });
+  }, []);
+
+  async function postData(url = "", data = {}) {
+    const response = await fetch(url, {
+      mode: "no-cors",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    return response;
+  }
+
+  async function handleSendQuestion(event: FormEvent) {
     event.preventDefault();
 
     if (newTextToTranslate.trim() === "") {
@@ -14,6 +36,12 @@ export function Home() {
     }
 
     console.log(newTextToTranslate);
+
+    await postData("http://localhost:5000/todo/create", {
+      newTextToTranslate,
+    }).then((data) => {
+      console.log(data);
+    });
 
     setNewTranslation(newTextToTranslate);
     setNewTextToTranslate("");
