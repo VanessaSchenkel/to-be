@@ -1,6 +1,9 @@
+import axios from "axios";
 import { FormEvent, useState, useEffect } from "react";
 import copyImg from "../assets/copy.svg";
 import "../styles/home.css";
+
+const baseURL = "";
 
 export function Home() {
   const [newTextToTranslate, setNewTextToTranslate] = useState("");
@@ -8,24 +11,14 @@ export function Home() {
   const [data, setData] = useState({});
 
   useEffect(() => {
-    fetch("/todo/getall")
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-        console.log(data);
-      });
+    axios.get("http://127.0.0.1:5000/").
+    then(res => console.log(res));
   }, []);
 
-  async function postData(url = "", data = {}) {
-    const response = await fetch(url, {
-      mode: "no-cors",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    return response;
+  function teste() {
+    const article = { title: 'React POST Request Example' };
+    axios.post('http://127.0.0.1:5000/create', article)
+        .then(response => console.log(response))
   }
 
   async function handleSendQuestion(event: FormEvent) {
@@ -37,11 +30,7 @@ export function Home() {
 
     console.log(newTextToTranslate);
 
-    await postData("http://localhost:5000/todo/create", {
-      newTextToTranslate,
-    }).then((data) => {
-      console.log(data);
-    });
+    teste()
 
     setNewTranslation(newTextToTranslate);
     setNewTextToTranslate("");

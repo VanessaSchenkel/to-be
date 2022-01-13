@@ -1,31 +1,21 @@
 from flask import Flask
-from flask import jsonify
+from flask import request
 from flask_cors import CORS
+
 app = Flask(__name__)
+CORS(app, resources=r'*')
 
+@app.route("/")
+def helloWorld():
+  print("GET")
+  return "Hello, cross-origin-world!"
 
-@app.route('/todo/getall',methods=['GET'])
-def getTasks():
-    return jsonify([
-   { "complete": "false", "task": "Read about MongoDb" },
-   { "complete": "false", "task": "Create a React ToDo App" },
-   { "complete": "false", "task": "Find my key" }
- ])
-
-@app.route('/todo/create',methods=['POST'])
-def createTask():
-    # Get item from the POST body
-    print("chegou")
-    return jsonify("python")
-
-@app.route('/todo/update',methods=['UPDATE'])
-def updateTask():
-    return 'Update Task'
-
-@app.route('/todo/delete',methods=['DELETE'])
-def deleteTask():
-    return 'Delete task'
+@app.route("/create", methods=['POST'])
+def getInfo():
+    print("POST CARALHO")
+    if not request.json or not 'title' in request.json:
+        print("NOPE")
+    return request.json['title']    
 
 if __name__ == "__main__":
-    app.run(debug=True)
- 
+  app.run(debug=True)

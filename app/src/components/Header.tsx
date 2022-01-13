@@ -23,7 +23,7 @@ export function Header() {
     <div id='header'>
       <button onClick={handleClickGoHome} className='link-home'>
         <img src={logoImg} alt='Logo To be' />
-        <h2>To be</h2>
+        <h2>To bIAs</h2>
       </button>
       <div className='header-links'>
         <button onClick={handleClickGoSobre}>
