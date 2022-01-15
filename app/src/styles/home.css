@@ -41,14 +41,21 @@ form {
 
 .botao-copiar {
   color: #fff;
-  transition: background-color 0.2s;
+  border-radius: 10px;
+  position: absolute;
+  top: 18%;
+  right: 5%;
+}
+
+.traducao {
+  display: flex;
+  height: 60%;
 }
 
 .img-copiar {
   height: 30px;
-  position: absolute;
-  top: 16%;
-  right: 5%;
+
+  transition: background-color 0.2s;
 }
 
 .img-copiar:hover {

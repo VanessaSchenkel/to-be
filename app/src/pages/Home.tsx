@@ -9,10 +9,10 @@ export function Home() {
   const [newTextToTranslate, setNewTextToTranslate] = useState("");
   const [newTranslation, setNewTranslation] = useState("");
 
-  useEffect(() => {
-    axios.get(baseURL).
-    then(res => console.log(res));
-  }, []);
+  // useEffect(() => {
+  //   axios.get(baseURL).
+  //   then(res => console.log(res));
+  // }, []);
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault();
@@ -24,10 +24,10 @@ export function Home() {
     const request = { text: newTextToTranslate };
     
     axios.post(baseURL+'/create', request)
-        .then(response => console.log(response))
-
-    setNewTranslation(newTextToTranslate);
-    setNewTextToTranslate("");
+        .then(response => {
+          console.log(response)
+          setNewTranslation(response.data)
+          })
   }
 
   function copyRoomCodeToClipboard() {

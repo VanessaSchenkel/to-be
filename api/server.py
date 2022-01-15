@@ -9,8 +9,8 @@ textToTranslate = ""
 textTranslated = ""
 translator = Translator()
 
-def translation():
-    return translator.translate('This is so nice', src="en", dest="pt").text
+def translation(textToTranslate):
+    return translator.translate(textToTranslate, src="en", dest="pt").text
 
 @app.route("/")
 def helloWorld():
@@ -19,7 +19,7 @@ def helloWorld():
 @app.route("/create", methods=['POST'])
 def getInfo():
     textToTranslate = request.json['text']
-    textTranslated = translation()
+    textTranslated = translation(textToTranslate)
     if not request.json or not 'text' in request.json:
         abort(400)
     return textTranslated    
