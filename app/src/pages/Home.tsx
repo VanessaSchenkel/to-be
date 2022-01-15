@@ -3,23 +3,16 @@ import { FormEvent, useState, useEffect } from "react";
 import copyImg from "../assets/copy.svg";
 import "../styles/home.css";
 
-const baseURL = "";
+const baseURL = "http://localhost:5000";
 
 export function Home() {
   const [newTextToTranslate, setNewTextToTranslate] = useState("");
   const [newTranslation, setNewTranslation] = useState("");
-  const [data, setData] = useState({});
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:5000/").
+    axios.get(baseURL).
     then(res => console.log(res));
   }, []);
-
-  function teste() {
-    const article = { title: 'React POST Request Example' };
-    axios.post('http://127.0.0.1:5000/create', article)
-        .then(response => console.log(response))
-  }
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault();
@@ -28,9 +21,10 @@ export function Home() {
       return;
     }
 
-    console.log(newTextToTranslate);
-
-    teste()
+    const request = { text: newTextToTranslate };
+    
+    axios.post(baseURL+'/create', request)
+        .then(response => console.log(response))
 
     setNewTranslation(newTextToTranslate);
     setNewTextToTranslate("");
