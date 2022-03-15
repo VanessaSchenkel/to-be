@@ -3,16 +3,22 @@ import { FormEvent, useState, useEffect } from "react";
 import copyImg from "../assets/copy.svg";
 import "../styles/home.css";
 
-const baseURL = "http://localhost:5000";
+const baseURL = "http://localhost:5001";
 
 export function Home() {
   const [newTextToTranslate, setNewTextToTranslate] = useState("");
   const [newTranslation, setNewTranslation] = useState("");
 
-  // useEffect(() => {
-  //   axios.get(baseURL).
-  //   then(res => console.log(res));
-  // }, []);
+  useEffect(() => {
+    axios
+      .get(baseURL)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault();
@@ -22,12 +28,11 @@ export function Home() {
     }
 
     const request = { text: newTextToTranslate };
-    
-    axios.post(baseURL+'/create', request)
-        .then(response => {
-          console.log(response)
-          setNewTranslation(response.data)
-          })
+
+    axios.post(baseURL + "/create", request).then((response) => {
+      console.log(response);
+      setNewTranslation(response.data);
+    });
   }
 
   function copyRoomCodeToClipboard() {
