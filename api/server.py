@@ -24,15 +24,11 @@ def helloWorld():
 @cross_origin()
 def getInfo():
     data = json.loads(request.data)
-    print(data)
-
-    # textToTranslate = request.json['text']
-    # textTranslated = translation(textToTranslate)
-    # if not request.json or not 'text' in request.json:
-    #     abort(400)
-
+    textToTranslate = data["text"]
+    textTranslated = translation(textToTranslate)
+    print(textTranslated)
        
-    return textTranslated    
+    return textTranslated
 
 if __name__ == "__main__":
   app.run(host="localhost", port=5001, debug=True)
